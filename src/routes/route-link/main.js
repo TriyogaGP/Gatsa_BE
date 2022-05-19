@@ -1,0 +1,40 @@
+const express = require('express');
+const router = express.Router();
+const { verifyToken } = require('../../middleware/VerifyToken');
+const { uploadFile } = require('../../middleware/uploadFile')
+const { uploadBerkas } = require('../../middleware/uploadBerkas')
+const MainController = require('../../controllers/c_main')
+
+router
+    .post('/login', MainController.login)
+    .get('/logout/:id', MainController.logout)
+    .get('/getdatausers/:idRole', verifyToken, MainController.readAllData)
+    .get('/getusers/:id', verifyToken, MainController.readDataByID)
+    .get('/getuserslookscreen/:id', MainController.readDataByIDLookscreen)
+    .post('/createupdateusers', MainController.createupdateData)
+    .post('/updateprofile', verifyToken, MainController.updateProfileData)
+    .delete('/getusers/:id', MainController.deleteData)
+    .get('/verifikasi/:kode/:activeAkun', MainController.verifikasi)
+    .post('/updateFile', uploadFile, MainController.updateFile)
+    .post('/updateBerkas', uploadBerkas, MainController.updateBerkas)
+    .get('/getprovinsi', MainController.readDataProvinsi)
+    .get('/getkabkotaonly', MainController.readDataKabKotaOnly)
+    .get('/getkabkota/:id', MainController.readDataKabKota)
+    .get('/getkecamatan/:id', MainController.readDataKecamatan)
+    .get('/getkeldesa/:id', MainController.readDataKelDesa)
+    .get('/getkelas', MainController.getkelas)
+    .post('/ambilKelas', MainController.ambilKelas)
+    .get('/dataDashboard', MainController.dataDashboard)
+    .get('/kelasSiswa/:kelas', MainController.kelasSiswa)
+    .get('/penilaian', MainController.penilaianSiswa)
+    .post('/ubahPenilaian', MainController.ubahPenilaian)
+    .post('/createJadwalNgajar', MainController.createJadwalNgajar)
+    .get('/getjadwalNgajar/:id', MainController.getjadwalNgajar)
+    .delete('/deleteJadwalNgajar/:id_jadwal', MainController.deleteJadwalNgajar)
+    .post('/updateStatus', MainController.updateStatus)
+    .get('/detailUserPDF/:id', MainController.detailUserPDF)
+    .get('/downloadexcel/:roleid', MainController.downloadexcel)
+    .get('/exportexcel/:cari', MainController.exportexcel)
+    .post('/importexcel', uploadFile, MainController.importexcel)
+    
+module.exports = router;
